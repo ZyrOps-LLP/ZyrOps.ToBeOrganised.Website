@@ -11,6 +11,7 @@ import {
   Twitter, 
   Mail 
 } from 'lucide-react';
+import brandLogo from '../logo.png';
 
 const SECTIONS = [
   {
@@ -46,6 +47,14 @@ const SECTIONS = [
     asset: "https://images.unsplash.com/photo-1540575861501-7cf05a4b125a?auto=format&fit=crop&q=80&w=2000",
   }
 ];
+
+const BrandLogo = ({ className = "", alt = "TOBEORGANISED logo" }) => (
+  <img
+    src={brandLogo}
+    alt={alt}
+    className={`w-auto object-contain ${className}`}
+  />
+);
 
 // --- Sub-Components ---
 
@@ -131,8 +140,8 @@ const Navbar = () => {
   return (
     <>
       <nav className="fixed top-0 w-full z-[100] p-6 flex justify-between items-center mix-blend-difference">
-        <div className="flex flex-col">
-          <span className="text-2xl font-black tracking-tighter uppercase text-white leading-none">TOBEORGANISED.</span>
+        <div className="flex flex-col items-start gap-2">
+          <BrandLogo className="h-10 md:h-12" />
           <span className="text-[10px] font-mono tracking-[0.4em] text-magenta">VISUAL ARCHITECTURE</span>
         </div>
         
@@ -242,12 +251,11 @@ export default function App() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.5 }}
-            className="mb-8"
+            className="mb-8 flex flex-col items-center"
           >
              <span className="text-magenta font-mono tracking-[0.5em] uppercase text-xs mb-4 block">Enter the Narrative</span>
-             <h1 className="text-6xl md:text-[12rem] font-black tracking-tighter text-white leading-none uppercase">
-               TOBE<br/><span className="text-magenta">ORGANISED.</span>
-             </h1>
+             <h1 className="sr-only">TOBEORGANISED</h1>
+             <BrandLogo className="h-24 md:h-44 lg:h-56" alt="TOBEORGANISED official logo" />
           </motion.div>
           
           <motion.div 
