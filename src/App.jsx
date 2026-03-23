@@ -13,6 +13,9 @@ import {
 } from 'lucide-react';
 import brandLogo from '../logo.png';
 
+const HERO_ASSET = "https://images.unsplash.com/photo-1603093508625-a71293ff7a12?auto=format&fit=crop&q=80&w=2200";
+const FALLBACK_ASSET = "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=2200";
+
 const SECTIONS = [
   {
     id: "01",
@@ -20,7 +23,7 @@ const SECTIONS = [
     title: "VISUAL SHOW DESIGN & CREATIVE ART DIRECTION",
     desc: "From the idea to the final production, we always seek a perfect integration between art and technique.",
     type: "image",
-    asset: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=2000",
+    asset: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=2200",
   },
   {
     id: "02",
@@ -28,7 +31,7 @@ const SECTIONS = [
     title: "STAGE DESIGN & TECHNICAL PRODUCTION",
     desc: "We meet the highest technical standards, respect deadlines and ensure agile development in complex environments.",
     type: "video_fallback", // Simulated with high-res image for stability
-    asset: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&q=80&w=2000",
+    asset: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&q=80&w=2200",
   },
   {
     id: "03",
@@ -36,7 +39,7 @@ const SECTIONS = [
     title: "IMMERSIVE EXPERIENCES & BRAND ACTIVATIONS",
     desc: "We build bridges between brands and their audiences through unforgettable sensory experiences.",
     type: "image",
-    asset: "https://images.unsplash.com/photo-1514525253361-bee8a187499b?auto=format&fit=crop&q=80&w=2000",
+    asset: "https://images.unsplash.com/photo-1514525253361-bee8a187499b?auto=format&fit=crop&q=80&w=2200",
   },
   {
     id: "04",
@@ -44,7 +47,23 @@ const SECTIONS = [
     title: "PERMANENT INSTALLATIONS & ARCHITAINMENT",
     desc: "Transforming physical environments into dynamic living canvases that breathe and respond.",
     type: "image",
-    asset: "https://images.unsplash.com/photo-1540575861501-7cf05a4b125a?auto=format&fit=crop&q=80&w=2000",
+    asset: "https://images.unsplash.com/photo-1540575861501-7cf05a4b125a?auto=format&fit=crop&q=80&w=2200",
+  },
+  {
+    id: "05",
+    label: "FOR PRODUCERS",
+    title: "LIVE EXPERIENCE ENGINEERING & SHOW CONTROL",
+    desc: "We merge creative direction with operation-ready systems so every cue lands with precision at scale.",
+    type: "image",
+    asset: "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?auto=format&fit=crop&q=80&w=2200",
+  },
+  {
+    id: "06",
+    label: "FOR CULTURE",
+    title: "SCENOGRAPHY, LIGHT NARRATIVES & PUBLIC ART MOMENTS",
+    desc: "From galleries to city plazas, we craft visual narratives that turn places into shared emotional landmarks.",
+    type: "image",
+    asset: "https://images.unsplash.com/photo-1493780474015-ba834fd0ce2f?auto=format&fit=crop&q=80&w=2200",
   }
 ];
 
@@ -78,6 +97,12 @@ const Section = ({ data, total }) => {
           src={data.asset} 
           alt={data.label} 
           className="w-full h-full object-cover"
+          loading="lazy"
+          onError={(e) => {
+            if (e.currentTarget.src !== FALLBACK_ASSET) {
+              e.currentTarget.src = FALLBACK_ASSET;
+            }
+          }}
         />
         <div className="absolute inset-0 bg-black/40" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black" />
@@ -246,12 +271,32 @@ export default function App() {
         className="h-screen overflow-y-auto snap-y snap-mandatory no-scrollbar"
       >
         {/* Intro Hero with Full Screen Text Fade-up */}
-        <section className="h-screen w-full flex flex-col items-center justify-center bg-black snap-start p-6 text-center">
+        <section className="relative h-screen w-full flex flex-col items-center justify-center bg-black snap-start p-6 text-center overflow-hidden">
+          <motion.div
+            className="absolute inset-0 z-0"
+            initial={{ scale: 1.1, opacity: 0.7 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 1.8, ease: "easeOut" }}
+          >
+            <img
+              src={HERO_ASSET}
+              alt="TOBEORGANISED hero background"
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                if (e.currentTarget.src !== FALLBACK_ASSET) {
+                  e.currentTarget.src = FALLBACK_ASSET;
+                }
+              }}
+            />
+            <div className="absolute inset-0 bg-black/60" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/25 to-black/70" />
+          </motion.div>
+
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.5 }}
-            className="mb-8 flex flex-col items-center"
+            className="relative z-10 mb-8 flex flex-col items-center"
           >
              <span className="text-magenta font-mono tracking-[0.5em] uppercase text-xs mb-4 block">Enter the Narrative</span>
              <h1 className="sr-only">TOBEORGANISED</h1>
@@ -262,7 +307,7 @@ export default function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1, duration: 1 }}
-            className="flex flex-col items-center"
+            className="relative z-10 flex flex-col items-center"
           >
             <p className="text-white/40 font-mono text-sm max-w-md mb-10 tracking-widest">
               A CREATIVE STUDIO DEDICATED TO THE ART OF ATMOSPHERE AND TECHNICAL PRECISION.
